@@ -1,8 +1,8 @@
 package main
 
 import (
-	"log"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -11,17 +11,17 @@ func respondWithError(w http.ResponseWriter, code int, msg string) {
 		log.Println("Responding with 5XX error:", msg)
 	}
 
-	type errResponse struct{
+	type errResponse struct {
 		Error string `json:"error"`
 	}
-	respondWithJSON(w,code,errResponse{
+	respondWithJSON(w, code, errResponse{
 		Error: msg,
 	})
 }
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	dat,err :=json.Marshal(payload)
-	if err !=nil {
+	dat, err := json.Marshal(payload)
+	if err != nil {
 		log.Printf("Failed to marshal JSON response : %v", payload)
 		w.WriteHeader(500)
 	}
